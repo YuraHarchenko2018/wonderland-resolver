@@ -1,41 +1,3 @@
-// Warn if overriding existing method
-if(Array.prototype.equals)
-    console.warn("Overriding existing Array.prototype.equals. Possible causes: New API defines the method, there's a framework conflict or you've got double inclusions in your code.");
-// attach the .equals method to Array's prototype to call it on any array
-Array.prototype.equals = function (array) {
-    // if the other array is a falsy value, return
-    if (!array)
-        return false;
-
-    // compare lengths - can save a lot of time 
-    if (this.length != array.length)
-        return false;
-
-    for (var i = 0, l=this.length; i < l; i++) {
-        // Check if we have nested arrays
-        if (this[i] instanceof Array && array[i] instanceof Array) {
-            // recurse into the nested arrays
-            if (!this[i].equals(array[i]))
-                return false;       
-        }           
-        else if (this[i] != array[i]) { 
-            // Warning - two different object instances will never be equal: {x:20} != {x:20}
-            return false;   
-        }           
-    }       
-    return true;
-}
-// Hide method from for-in loops
-Object.defineProperty(Array.prototype, "equals", {enumerable: false});
-
-
-
-
-
-
-
-
-
 class Words {
 
     words = []
@@ -57,15 +19,42 @@ class Words {
     }
 
     _checkWord(word) {
+        // check type
         if (typeof word != 'string') {
             console.log("Type of word is not equal string")
             process.exit()
         }
 
+        // check length
         if (word.length == 0) {
             console.log('Empty word')
             process.exit()
         }
+    }
+
+    _arrayEquals (array1, array2) {
+        // if the other array is a falsy value, return
+        if (!array2)
+            return false;
+    
+        // compare lengths - can save a lot of time 
+        if (array1.length != array2.length)
+            return false;
+    
+        for (var i = 0, l = array1.length; i < l; i++) {
+            // Check if we have nested arrays
+            if (array1[i] instanceof Array && array2[i] instanceof Array) {
+                // recurse into the nested arrays
+                if (!array1[i].equals(array2[i]))
+                    return false;       
+            }           
+            else if (array1[i] != array2[i]) { 
+                // Warning - two different object instances will never be equal: {x:20} != {x:20}
+                return false;   
+            }           
+        }       
+
+        return true;
     }
 
     // @param word string
@@ -75,6 +64,8 @@ class Words {
         let wordChars = word.split('')
 
         for (const templateWord of this.words) {
+
+            // compare lengths - can save a lot of time 
             if (word.length == templateWord.length) {
 
                 let tempWordArray = []
@@ -90,7 +81,8 @@ class Words {
                     }
                 }
 
-                if (wordChars.equals(tempWordArray)) {
+                // if words is identity
+                if (this._arrayEquals(wordChars, tempWordArray)) {
                     this.possibleVariants.push(templateWord)
                 }
 
@@ -103,7 +95,7 @@ class Words {
 
 let argWord = process.argv[2] ?? 'з_жи_ал_а'
 
-const WordsInstance = new Words()
-const result = WordsInstance.search(argWord)
+const wordsInstance = new Words()
+const result = wordsInstance.search(argWord)
 
 console.log(result)
