@@ -72,9 +72,9 @@ class Words {
                 let templateWordChars = templateWord.split('')
 
                 for (let i = 0; i < wordChars.length; i++) {
-                    const templateChar = wordChars[i];
+                    const wordChar = wordChars[i];
                     
-                    if (templateChar != '_') {
+                    if (wordChar != '_') {
                         tempWordArray.push(templateWordChars[i])
                     } else {
                         tempWordArray.push('_')
