@@ -32,7 +32,7 @@ class Words {
         }
     }
 
-    _arrayEquals (array1, array2) {
+    _isArrayEquals (array1, array2) {
         // if the other array is a falsy value, return
         if (!array2)
             return false;
@@ -82,7 +82,7 @@ class Words {
                 }
 
                 // if words is identity
-                if (this._arrayEquals(wordChars, tempWordArray)) {
+                if (this._isArrayEquals(wordChars, tempWordArray)) {
                     this.possibleVariants.push(templateWord)
                 }
 
@@ -98,4 +98,4 @@ let argWord = process.argv[2] ?? 'з_жи_ал_а'
 const wordsInstance = new Words()
 const result = wordsInstance.search(argWord)
 
-console.log(result)
+console.log(result)g
