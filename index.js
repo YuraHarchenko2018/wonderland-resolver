@@ -98,4 +98,4 @@ let argWord = process.argv[2] ?? 'з_жи_ал_а'
 const wordsInstance = new Words()
 const result = wordsInstance.search(argWord)
 
-console.log(result)g
+console.log(result)
