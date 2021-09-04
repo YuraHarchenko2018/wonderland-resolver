@@ -58,7 +58,7 @@ class Words {
 
     _checkWord(word) {
         if (typeof word != 'string') {
-            console.log("type of word is not equal string")
+            console.log("Type of word is not equal string")
             process.exit()
         }
 
