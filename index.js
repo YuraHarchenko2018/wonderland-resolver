@@ -32,6 +32,14 @@ class Words {
         }
     }
 
+    _checkExceptLetters(exceptLetters) {
+        // check type
+        if (typeof exceptLetters != 'string') {
+            console.log("Type of except-letters is not equal string")
+            process.exit()
+        }
+    }
+
     _isArrayEquals (array1, array2) {
         // if the other array is a falsy value, return
         if (!array2)
@@ -58,10 +66,13 @@ class Words {
     }
 
     // @param word string
-    search(word) {
+    // @param exceptLetters string
+    search(word = '', exceptLetters = '') {
         this._checkWord(word)
+        this._checkExceptLetters(exceptLetters)
 
         let wordChars = word.split('')
+        let exceptLettersArray = exceptLetters.split('')
 
         for (const templateWord of this.words) {
 
@@ -73,6 +84,11 @@ class Words {
 
                 for (let i = 0; i < wordChars.length; i++) {
                     const wordChar = wordChars[i];
+
+                    // if there is a char that we do not need, we destroy the array (by adding '-' char)
+                    if (exceptLettersArray.includes(templateWordChars[i])) {
+                        tempWordArray.push('-')
+                    }
                     
                     if (wordChar != '_') {
                         tempWordArray.push(templateWordChars[i])
@@ -93,9 +109,10 @@ class Words {
     }
 }
 
-let argWord = process.argv[2] ?? 'з_жи_ал_а'
+let argWord = process.argv[2] ?? 'з_жи_ал_а'  // example
+let argExceptChars = process.argv[3] ?? 'бве' // example
 
 const wordsInstance = new Words()
-const result = wordsInstance.search(argWord)
+const result = wordsInstance.search(argWord, argExceptChars)
 
 console.log(result)
