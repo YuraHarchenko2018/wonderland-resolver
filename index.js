@@ -110,7 +110,7 @@ class Words {
 }
 
 let argWord = process.argv[2] ?? 'з_жи_ал_а'  // example
-let argExceptChars = process.argv[3] ?? 'бве' // example
+let argExceptChars = process.argv[3] ?? '' // example
 
 const wordsInstance = new Words()
 const result = wordsInstance.search(argWord, argExceptChars)
